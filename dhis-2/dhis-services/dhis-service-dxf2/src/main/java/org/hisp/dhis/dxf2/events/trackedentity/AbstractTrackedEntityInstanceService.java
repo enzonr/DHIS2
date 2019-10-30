@@ -85,7 +85,6 @@ import org.hisp.dhis.util.DateUtils;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Multimap;
 import com.vividsolutions.jts.geom.Geometry;
 
 /**
