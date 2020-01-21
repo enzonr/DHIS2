@@ -82,6 +82,7 @@ import org.hisp.dhis.user.User;
 import org.hisp.dhis.user.UserCredentials;
 import org.hisp.dhis.user.UserService;
 import org.hisp.dhis.util.DateUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
@@ -116,12 +117,10 @@ public abstract class AbstractTrackedEntityInstanceService
     protected FileResourceService fileResourceService;
     protected TrackerOwnershipManager trackerOwnershipAccessManager;
     protected Notifier notifier;
-
     @Autowired
-    protected TrackedEntityAttributeRepository trackedEntityAttributeRepository;
-
+    protected TrackedEntityInstanceAggregate trackedEntityInstanceAggregate;
     @Autowired
-    private TrackedEntityInstanceAggregate trackedEntityInstanceAggregate;
+    protected TrackedEntityAttributeStore trackedEntityAttributeStore;
 
     private final CachingMap<String, OrganisationUnit> organisationUnitCache = new CachingMap<>();
 
@@ -219,9 +218,9 @@ public abstract class AbstractTrackedEntityInstanceService
 
         List<TrackedEntityType> trackedEntityTypes = manager.getAll( TrackedEntityType.class );
 
-        Set<TrackedEntityAttribute> trackedEntityTypeAttributes = trackedEntityAttributeRepository.getTrackedEntityAttributesByTrackedEntityTypes();
+        Set<TrackedEntityAttribute> trackedEntityTypeAttributes = trackedEntityAttributeStore.getTrackedEntityAttributesByTrackedEntityTypes();
 
-        Map<Program, Set<TrackedEntityAttribute>> teaByProgram = trackedEntityAttributeRepository.getTrackedEntityAttributesByProgram();
+        Map<Program, Set<TrackedEntityAttribute>> teaByProgram = trackedEntityAttributeStore.getTrackedEntityAttributesByProgram();
 
         if ( queryParams != null && queryParams.isIncludeAllAttributes() )
         {
